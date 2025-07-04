@@ -17,12 +17,12 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacementNamed(context, OnboardScreen.name);
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _moveNextScreen();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   _moveNextScreen();
+  // }
 
   @override
   Widget build(BuildContext context) {
