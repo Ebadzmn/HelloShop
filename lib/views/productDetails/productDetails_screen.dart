@@ -1,4 +1,7 @@
+import 'package:e_commarce_v2_flutter/config/app_colors.dart';
 import 'package:e_commarce_v2_flutter/controller/product_details_controller.dart';
+import 'package:e_commarce_v2_flutter/data/models/product_details_model.dart';
+import 'package:e_commarce_v2_flutter/views/productDetails/widget/product_details_slider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,50 +18,22 @@ class ProductdetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Obx(() {
-          final product = _productDetailsController.productDetails.value;
-          if (product == null) {
-            print(product);
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Center(
-            child: Column(
-              children: [
-                SizedBox(
-                    height: 371,
-                    width: double.infinity,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xFFF2F3F2),
-                          borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(30))),
-                      child: PageView.builder(
-                        scrollDirection: Axis.horizontal,
-                        onPageChanged: _productDetailsController.onPageChanged,
-                        itemCount: product.images.length,
-                        controller: _productDetailsController.pageController,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 80,
-                                ),
-                                Image.network(
-                                  product.images[index],
-                                  width: 328,
-                                  height: 198,
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    )),
-                Obx(() => Center(
+        body: SingleChildScrollView(
+          child: GetBuilder<ProductDetailsController>(
+            builder: (controller) {
+              final product = controller.productDetails;
+              if (product == null) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Center(
+                child: Column(
+                  children: [
+                    productdetails_slider_widget(
+                        productDetailsController: _productDetailsController,
+                        product: product),
+                    Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(product.images.length, (index) {
@@ -66,60 +41,230 @@ class ProductdetailsScreen extends StatelessWidget {
                             duration: Duration(milliseconds: 300),
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             width:
-                                _productDetailsController.currentIndex.value ==
-                                        index
+                                _productDetailsController.currentIndex == index
                                     ? 12
                                     : 8,
                             height:
-                                _productDetailsController.currentIndex.value ==
-                                        index
+                                _productDetailsController.currentIndex == index
                                     ? 12
                                     : 8,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: _productDetailsController
-                                            .currentIndex.value ==
+                                color: _productDetailsController.currentIndex ==
                                         index
                                     ? Colors.black
                                     : Colors.grey),
                           );
                         }),
                       ),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.all(22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(22),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            product.productName,
-                            style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.productName,
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              Text(
+                                product.productKGprice,
+                                style: TextStyle(fontSize: 16),
+                              )
+                            ],
                           ),
-                          Text(
-                            product.productKGprice,
-                            style: TextStyle(fontSize: 16),
-                          )
-                        ],
-                      ),
-                      Obx(() => IconButton(
+                          IconButton(
                             onPressed:
                                 _productDetailsController.toggleFavourite,
                             icon: Icon(Icons.favorite_border_rounded),
-                            color: _productDetailsController.isFavourite.value
+                            color: _productDetailsController.isFavourite
                                 ? Colors.red
                                 : Colors.grey,
-                          ))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        }));
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    controller.increseProduct();
+                                  },
+                                  icon: Icon(Icons.add)),
+                              Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    color: Colors.lightGreen,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Center(
+                                  child: Text(
+                                    '${controller.count}',
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    controller.decreseProduct();
+                                  },
+                                  icon: Icon(Icons.delete_forever_outlined)),
+                            ],
+                          ),
+                          Text(
+                            'BDT ${product.productPrice}',
+                            style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(fontSize: 24),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: SizedBox(
+                        height: 1,
+                        width: double.infinity,
+                        child: Container(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Product Details',
+                            style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500)),
+                          ),
+                          IconButton(
+                              onPressed: controller.toggleDescription,
+                              icon: Icon(
+                                controller.isDescriptionExpended
+                                    ? Icons.arrow_downward_outlined
+                                    : Icons.arrow_upward_outlined,
+                                color: controller.isDescriptionExpended
+                                    ? AppColors.splashbackground
+                                    : Colors.grey,
+                              ))
+                        ],
+                      ),
+                    ),
+                    AnimatedSize(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: controller.isDescriptionExpended
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Text(product.productDescription),
+                            )
+                          : SizedBox.shrink(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 26),
+                      child: SizedBox(
+                        height: 1,
+                        width: double.infinity,
+                        child: Container(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Nutrition',
+                            style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.grey),
+                                child: Center(
+                                  child: Text(
+                                    '100g',
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.white70),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.arrow_downward_outlined))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 26),
+                      child: SizedBox(
+                        height: 1,
+                        width: double.infinity,
+                        child: Container(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Review',
+                            style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                          ),
+                          Row(
+                            children: [
+                              Text(product.productRating),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.arrow_downward_outlined))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: ElevatedButton(
+                          onPressed: () {}, child: Text('Add to Cart')),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ));
   }
 }
