@@ -2,6 +2,7 @@ import 'package:e_commarce_v2_flutter/views/auth/signin_screen.dart';
 import 'package:e_commarce_v2_flutter/views/auth/signup_screen.dart';
 import 'package:e_commarce_v2_flutter/views/category/category_screen.dart';
 import 'package:e_commarce_v2_flutter/views/home/home_screen.dart';
+import 'package:e_commarce_v2_flutter/views/product/productList_screen.dart';
 import 'package:e_commarce_v2_flutter/views/productDetails/productDetails_screen.dart';
 import 'package:e_commarce_v2_flutter/views/splash/onboard_screen.dart';
 import 'package:e_commarce_v2_flutter/views/splash/splash_screen.dart';
@@ -31,6 +32,13 @@ class AppRoutes {
     if (settings.name == CategoryScreen.name) {
       route = const CategoryScreen();
     }
+    if (settings.name == ProductlistScreen.name) {
+      final categoryId =
+          settings.arguments as int; // ✅ get argument from pushNamed
+      route =
+          ProductlistScreen(categoryId: categoryId); // ✅ pass to constructor
+    }
+
     return MaterialPageRoute(builder: (context) {
       return route;
     });

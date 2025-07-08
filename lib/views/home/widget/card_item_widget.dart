@@ -37,11 +37,11 @@ class cartItem extends StatelessWidget {
                 child: Image.network(
                   imageUrl,
                   width: 110,
-                  height: 100,
+                  height: 70,
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               Text(
                 name,
@@ -51,7 +51,7 @@ class cartItem extends StatelessWidget {
               ),
               Text(subdescription),
               const SizedBox(
-                height: 16,
+                height: 6,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,7 +59,7 @@ class cartItem extends StatelessWidget {
                   Text(
                     '${price.toString()} BDT',
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                        fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   Container(
                     height: 40,
