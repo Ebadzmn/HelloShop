@@ -18,7 +18,7 @@ class productdetails_slider_widget extends StatelessWidget {
         height: 371,
         width: double.infinity,
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: Color(0xFFF2F3F2),
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))),
           child: PageView.builder(
@@ -28,10 +28,10 @@ class productdetails_slider_widget extends StatelessWidget {
             controller: _productDetailsController.pageController,
             itemBuilder: (context, index) {
               return Container(
-                decoration: BoxDecoration(),
+                decoration: const BoxDecoration(),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 80,
                     ),
                     Image.network(

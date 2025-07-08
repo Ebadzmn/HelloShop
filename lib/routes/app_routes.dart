@@ -1,5 +1,6 @@
 import 'package:e_commarce_v2_flutter/views/auth/signin_screen.dart';
 import 'package:e_commarce_v2_flutter/views/auth/signup_screen.dart';
+import 'package:e_commarce_v2_flutter/views/category/category_screen.dart';
 import 'package:e_commarce_v2_flutter/views/home/home_screen.dart';
 import 'package:e_commarce_v2_flutter/views/productDetails/productDetails_screen.dart';
 import 'package:e_commarce_v2_flutter/views/splash/onboard_screen.dart';
@@ -26,6 +27,9 @@ class AppRoutes {
     }
     if (settings.name == ProductdetailsScreen.name) {
       route = ProductdetailsScreen();
+    }
+    if (settings.name == CategoryScreen.name) {
+      route = const CategoryScreen();
     }
     return MaterialPageRoute(builder: (context) {
       return route;

@@ -1,4 +1,5 @@
 import 'package:e_commarce_v2_flutter/controller/groceries_controller.dart';
+import 'package:e_commarce_v2_flutter/views/productDetails/productDetails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +30,9 @@ class Grocerise_slider_widget extends StatelessWidget {
                 final GroceriseSlider =
                     groceriesController.groceriesList[index];
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, ProductdetailsScreen.name);
+                  },
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     width: 245,

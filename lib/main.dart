@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/productDetails',
+      initialRoute: '/productCategory',
       onGenerateRoute: AppRoutes.onGenerateRoute,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,

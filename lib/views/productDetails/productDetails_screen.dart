@@ -1,6 +1,7 @@
 import 'package:e_commarce_v2_flutter/config/app_colors.dart';
 import 'package:e_commarce_v2_flutter/controller/product_details_controller.dart';
-import 'package:e_commarce_v2_flutter/data/models/product_details_model.dart';
+
+import 'package:e_commarce_v2_flutter/views/productDetails/widget/line_widget.dart';
 import 'package:e_commarce_v2_flutter/views/productDetails/widget/product_details_slider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class ProductdetailsScreen extends StatelessWidget {
             builder: (controller) {
               final product = controller.productDetails;
               if (product == null) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
@@ -38,7 +39,7 @@ class ProductdetailsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(product.images.length, (index) {
                           return AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             width:
                                 _productDetailsController.currentIndex == index
@@ -69,20 +70,20 @@ class ProductdetailsScreen extends StatelessWidget {
                               Text(
                                 product.productName,
                                 style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold)),
                               ),
                               Text(
                                 product.productKGprice,
-                                style: TextStyle(fontSize: 16),
+                                style: const TextStyle(fontSize: 16),
                               )
                             ],
                           ),
                           IconButton(
                             onPressed:
                                 _productDetailsController.toggleFavourite,
-                            icon: Icon(Icons.favorite_border_rounded),
+                            icon: const Icon(Icons.favorite_border_rounded),
                             color: _productDetailsController.isFavourite
                                 ? Colors.red
                                 : Colors.grey,
@@ -101,7 +102,7 @@ class ProductdetailsScreen extends StatelessWidget {
                                   onPressed: () {
                                     controller.increseProduct();
                                   },
-                                  icon: Icon(Icons.add)),
+                                  icon: const Icon(Icons.add)),
                               Container(
                                 height: 40,
                                 width: 40,
@@ -111,7 +112,7 @@ class ProductdetailsScreen extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     '${controller.count}',
-                                    style: TextStyle(fontSize: 22),
+                                    style: const TextStyle(fontSize: 22),
                                   ),
                                 ),
                               ),
@@ -119,28 +120,20 @@ class ProductdetailsScreen extends StatelessWidget {
                                   onPressed: () {
                                     controller.decreseProduct();
                                   },
-                                  icon: Icon(Icons.delete_forever_outlined)),
+                                  icon: const Icon(
+                                      Icons.delete_forever_outlined)),
                             ],
                           ),
                           Text(
                             'BDT ${product.productPrice}',
                             style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(fontSize: 24),
+                                textStyle: const TextStyle(fontSize: 24),
                                 fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: SizedBox(
-                        height: 1,
-                        width: double.infinity,
-                        child: Container(
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
+                    const Line_widget(),
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Row(
@@ -149,7 +142,7 @@ class ProductdetailsScreen extends StatelessWidget {
                           Text(
                             'Product Details',
                             style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w500)),
                           ),
                           IconButton(
@@ -166,7 +159,7 @@ class ProductdetailsScreen extends StatelessWidget {
                       ),
                     ),
                     AnimatedSize(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                       child: controller.isDescriptionExpended
                           ? Padding(
@@ -174,19 +167,9 @@ class ProductdetailsScreen extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(product.productDescription),
                             )
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 26),
-                      child: SizedBox(
-                        height: 1,
-                        width: double.infinity,
-                        child: Container(
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
+                    const Line_widget(),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
@@ -195,7 +178,7 @@ class ProductdetailsScreen extends StatelessWidget {
                           Text(
                             'Nutrition',
                             style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                           ),
                           Row(
@@ -206,7 +189,7 @@ class ProductdetailsScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.grey),
-                                child: Center(
+                                child: const Center(
                                   child: Text(
                                     '100g',
                                     style: TextStyle(
@@ -216,23 +199,14 @@ class ProductdetailsScreen extends StatelessWidget {
                               ),
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.arrow_downward_outlined))
+                                  icon:
+                                      const Icon(Icons.arrow_downward_outlined))
                             ],
                           )
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 26),
-                      child: SizedBox(
-                        height: 1,
-                        width: double.infinity,
-                        child: Container(
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
+                    const Line_widget(),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
@@ -241,7 +215,7 @@ class ProductdetailsScreen extends StatelessWidget {
                           Text(
                             'Review',
                             style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                           ),
                           Row(
@@ -249,7 +223,8 @@ class ProductdetailsScreen extends StatelessWidget {
                               Text(product.productRating),
                               IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.arrow_downward_outlined))
+                                  icon:
+                                      const Icon(Icons.arrow_downward_outlined))
                             ],
                           )
                         ],
@@ -258,7 +233,7 @@ class ProductdetailsScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: ElevatedButton(
-                          onPressed: () {}, child: Text('Add to Cart')),
+                          onPressed: () {}, child: const Text('Add to Cart')),
                     )
                   ],
                 ),
